@@ -1,0 +1,14 @@
+
+#explicationText {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  border-style: double;
+  background-color: lightgrey;
+  border-radius: 5px;
+}
+
+#progressBarDIV {
+  position: fixed;
+  bottom: 0;
+}
