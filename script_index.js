@@ -23,11 +23,11 @@ function explicationFunction() {
   }
 }
 
-  function startTest() {
-    var r = confirm("You are going to start the tests, are you sure ?");
+function startTest() {
+  var r = confirm("You are going to start a series of 10 tests, are you sure ?");
   if (r == true) {
-      window.open('test.html', '_self');
+    window.open('test.html', '_self');
   } else {
-      console.log("You pressed Cancel!");
+    console.log("You pressed Cancel!");
   }
 }
