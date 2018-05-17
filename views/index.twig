@@ -1,6 +1,18 @@
 {% extends 'layout.twig' %} {% block body %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">{{ title }}</h1>
+        <p>This website serves as a platform to test the accuracy of meaning representations of sentences created by ccg2lambda
+            Visualize.</p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Go to test page >></a>
+        </p>
+    </div>
+</div>
 <div class="container">
-    <h1>{{title}}</h1>
-    <p>Welcome to {{title}}</p>
+    <div id="howto" class="lm-12">
+        <h1>How to contribute</h1>
+        <p></p>
+    </div>
 </div>
 {% endblock %}
