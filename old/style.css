@@ -1,0 +1,33 @@
+
+#explicationText {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  border-style: double;
+  background-color: lightgrey;
+  border-radius: 5px;
+}
+
+#progressBarDIV {
+  position: fixed;
+  bottom: 0;
+}
+
+.model
+{
+  width: 75px;
+  height: 75px;
+  background:url(models/graph1.png) no-repeat;
+}
+
+.models_1{background:url(models/graph1.png) no-repeat;}
+
+.models_2{background:url(models/graph2.png) no-repeat;}
+
+.models_3{background:url(models/graph3.png) no-repeat;}
+
+.models_4{background:url(models/graph4.png) no-repeat;}
+
+.models_5{background:url(models/graph5.png) no-repeat;}
+
+.models_6{background:url(models/graph6.png) no-repeat;}
