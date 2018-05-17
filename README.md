@@ -1,6 +1,6 @@
 # ccg2lambda Website for visualization models
 
-This is the website for ccg2lambda visualization models.
+This is the website for testing ccg2lambda visualize's representations.
 
 
 
