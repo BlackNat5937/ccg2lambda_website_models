@@ -2,7 +2,18 @@
 
 This is the website for testing ccg2lambda visualize's representations.
 
+# For Developement
 
+You need Node.js and Visual Code for developement
+
+### First time :
+$ npm install
+
+### All time :
+
+To launch : $ node bin/www
+
+Site : http://localhost:3000/
 
 # Citing this work
 
