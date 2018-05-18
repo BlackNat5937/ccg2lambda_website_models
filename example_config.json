@@ -1,0 +1,5 @@
+{
+    "mysql_host":"localhost",
+    "mysql_username":"user",
+    "mysql_password":"password"
+}
