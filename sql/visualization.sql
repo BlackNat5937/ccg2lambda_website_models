@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 21 mai 2018 à 05:07
+-- Généré le :  lun. 21 mai 2018 à 07:01
 -- Version du serveur :  10.1.32-MariaDB
 -- Version de PHP :  7.0.30
 
@@ -75,7 +75,7 @@ CREATE TABLE `results` (
 DROP TABLE IF EXISTS `sentences`;
 CREATE TABLE `sentences` (
   `sentence_code` int(11) NOT NULL,
-  `sentence_string` varchar(500) NOT NULL
+  `sentence_string` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -107,7 +107,8 @@ ALTER TABLE `results`
 -- Index pour la table `sentences`
 --
 ALTER TABLE `sentences`
-  ADD PRIMARY KEY (`sentence_code`);
+  ADD PRIMARY KEY (`sentence_code`),
+  ADD UNIQUE KEY `sentence_string` (`sentence_string`);
 
 --
 -- Contraintes pour les tables déchargées
