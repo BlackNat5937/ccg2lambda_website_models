@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 21 mai 2018 à 07:01
+-- Généré le :  lun. 21 mai 2018 à 08:56
 -- Version du serveur :  10.1.32-MariaDB
 -- Version de PHP :  7.0.30
 
@@ -109,6 +109,34 @@ ALTER TABLE `results`
 ALTER TABLE `sentences`
   ADD PRIMARY KEY (`sentence_code`),
   ADD UNIQUE KEY `sentence_string` (`sentence_string`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `answer_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `question_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `results`
+--
+ALTER TABLE `results`
+  MODIFY `results_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `sentences`
+--
+ALTER TABLE `sentences`
+  MODIFY `sentence_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
