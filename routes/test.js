@@ -7,7 +7,7 @@ const fs = require('fs');
 
 function getDB(dbCon) {
     return new Promise((resolve, reject) => {
-        con.query("SELECT sentence_string FROM sentences ORDER BY RAND() LIMIT 1", function (err, result, fields) {
+        dbCon.query("SELECT sentence_string FROM sentences ORDER BY RAND() LIMIT 1", function (err, result, fields) {
             if (err) reject(err);
             console.log(result);
             //random_sentence = result;
@@ -39,7 +39,8 @@ router.get('/test', function (req, res, next) {
     let random_sentence = "";
 
     getDB(con).then(result => {
-        random_sentence = result;
+        random_sentence = result[0].sentence_string;
+        con.end;
     }).then(()=>{
         res.render('test', {
             questions: questions,
