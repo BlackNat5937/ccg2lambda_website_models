@@ -80,8 +80,6 @@ class Sentence {
     }
 }
 
-//TODO check args integrity
-
 // remove two first args (node executable and the path to this JS file)
 process.argv.shift();
 process.argv.shift();
@@ -109,6 +107,9 @@ if (fs.existsSync(drsImageFilePath)) {
 
 if (sentenceGraphRep === undefined || sentenceDRSRep === undefined)
     throw 'invalid image file paths';
+
+if (!sentenceGraphRep.toString('hex').startsWith('89504e470d0a1a0a') || !sentenceDRSRep.toString('hex').startsWith('89504e470d0a1a0a'))
+    throw 'wrong image format, use PNG';
 
 let sentenceString = sentenceJson.sentence;
 let sentenceQuestions = sentenceJson.questions;
