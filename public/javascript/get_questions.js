@@ -1,4 +1,7 @@
-var mysql = require('mysql');
+//OBSOLETE
+
+const mysql = require('mysql');
+const config = require(`./config.json`);
 
 var con = mysql.createConnection({
     host : config.mysql_host,
