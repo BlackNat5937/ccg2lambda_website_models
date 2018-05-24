@@ -42,46 +42,47 @@ router.get('/test', function (req, res, next) {
     }else{
         req.session.view ++;
     }
-
-    let questions;
     
-    let con = mysql.createConnection({
-        host: config.mysql_host,
-        user: config.mysql_username,
-        password: config.mysql_password,
-        database: "visualization"
-    });
-
-    let random_question = "";
-    let object_question;
-    let answer = "";
-
-    getDB(con).then(result => {
-        random_question = result[0].question_string;
-        object_question = result[0];
-        //con.end();
-    }).then(()=>{
-        return getAnswersDB(con, object_question.question_code).then(result2 => {
-            console.log("Code " + object_question.question_code)
-            answer = result2;
+    if(req.session.view <= 10){
+        let questions;
+    
+        let con = mysql.createConnection({
+            host: config.mysql_host,
+            user: config.mysql_username,
+            password: config.mysql_password,
+            database: "visualization"
         });
-    }).then(()=>{
-        
-        
-
-
-        res.render('test', {
-            questions: questions,
-            question: random_question,
-            answer1: answer[0].answer_string,
-            answer2: answer[1].answer_string,
-            answer3: answer[2].answer_string,
-            title: 'MR Test',
-            current: 'test',
-            number_test: req.session.view,
-        });
-    }).catch();
-
+    
+        let random_question = "";
+        let object_question;
+        let answer = "";
+    
+        getDB(con).then(result => {
+            random_question = result[0].question_string;
+            object_question = result[0];
+            //con.end();
+        }).then(()=>{
+            return getAnswersDB(con, object_question.question_code).then(result2 => {
+                console.log("Code " + object_question.question_code)
+                answer = result2;
+            });
+        }).then(()=>{
+            res.render('test', {
+                questions: questions,
+                question: random_question,
+                answer1: answer[0].answer_string,
+                answer2: answer[1].answer_string,
+                answer3: answer[2].answer_string,
+                title: 'MR Test',
+                current: 'test',
+                number_test: req.session.view,
+            });
+        }).catch();
+    }
+    else{
+        req.session.view = 0;
+        res.redirect("/test/")
+    }
     
 });
 
