@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 21 mai 2018 à 08:56
+-- Généré le :  mar. 22 mai 2018 à 08:53
 -- Version du serveur :  10.1.32-MariaDB
 -- Version de PHP :  7.0.30
 
@@ -36,6 +36,32 @@ CREATE TABLE `answers` (
   `answer_id` int(11) NOT NULL,
   `answer_string` varchar(500) NOT NULL,
   `answer_questioncode` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `boximages`
+--
+
+DROP TABLE IF EXISTS `boximages`;
+CREATE TABLE `boximages` (
+  `boximage_code` int(11) NOT NULL,
+  `boximage_image` mediumblob NOT NULL,
+  `boximage_sentencecode` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `graphimages`
+--
+
+DROP TABLE IF EXISTS `graphimages`;
+CREATE TABLE `graphimages` (
+  `graphimage_code` int(11) NOT NULL,
+  `graphimage_image` mediumblob NOT NULL,
+  `graphimage_sentencecode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -90,6 +116,20 @@ ALTER TABLE `answers`
   ADD KEY `FK_QUESTIONCODE` (`answer_questioncode`);
 
 --
+-- Index pour la table `boximages`
+--
+ALTER TABLE `boximages`
+  ADD PRIMARY KEY (`boximage_code`),
+  ADD KEY `FK_BSENTENCECODE` (`boximage_sentencecode`);
+
+--
+-- Index pour la table `graphimages`
+--
+ALTER TABLE `graphimages`
+  ADD PRIMARY KEY (`graphimage_code`),
+  ADD KEY `FK_GSENTENCECODE` (`graphimage_sentencecode`);
+
+--
 -- Index pour la table `questions`
 --
 ALTER TABLE `questions`
@@ -118,25 +158,37 @@ ALTER TABLE `sentences`
 -- AUTO_INCREMENT pour la table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `answer_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `answer_code` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `boximages`
+--
+ALTER TABLE `boximages`
+  MODIFY `boximage_code` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `graphimages`
+--
+ALTER TABLE `graphimages`
+  MODIFY `graphimage_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `question_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `results`
 --
 ALTER TABLE `results`
-  MODIFY `results_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `results_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `sentences`
 --
 ALTER TABLE `sentences`
-  MODIFY `sentence_code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sentence_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -147,6 +199,18 @@ ALTER TABLE `sentences`
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `FK_QUESTIONCODE` FOREIGN KEY (`answer_questioncode`) REFERENCES `questions` (`question_code`);
+
+--
+-- Contraintes pour la table `boximages`
+--
+ALTER TABLE `boximages`
+  ADD CONSTRAINT `FK_BSENTENCECODE` FOREIGN KEY (`boximage_sentencecode`) REFERENCES `sentences` (`sentence_code`);
+
+--
+-- Contraintes pour la table `graphimages`
+--
+ALTER TABLE `graphimages`
+  ADD CONSTRAINT `FK_GSENTENCECODE` FOREIGN KEY (`graphimage_sentencecode`) REFERENCES `sentences` (`sentence_code`);
 
 --
 -- Contraintes pour la table `questions`
