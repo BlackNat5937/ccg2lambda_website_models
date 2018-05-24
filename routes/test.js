@@ -66,7 +66,6 @@ function renderQuestionPage(res, req) {
     let answers = [];
     let visualization;
 
-    //for imag e: questionObject.question_sentencecode
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
         questionObject = sentenceResult[0];
@@ -74,12 +73,8 @@ function renderQuestionPage(res, req) {
         return getAnswersFromDatabse(con, questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
-    }).then(()=>{
-        return getImageFromDatabase(con, questionObject.question_sentencecode).then(imageResult => {
-            visualization = imageResult[0];
-            console.log("IMAGE : " + visualization.graphimage_image)
-        })
     }).then(() => {
+        console.log(questionObject.question_sentencecode);
         res.render('test', {
             questions: questions,
             question: randomQuestion,
@@ -89,6 +84,7 @@ function renderQuestionPage(res, req) {
             title: 'MR Test',
             current: 'test',
             number_test: req.session.testStage,
+            code_sentence: questionObject.question_sentencecode,
         });
     }).catch();
 }
