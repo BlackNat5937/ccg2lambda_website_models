@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const imageRouter = require('./routes/image');
 const testRouter = require('./routes/test');
 const resultsRouter = require('./routes/results');
+const thanksRouter = require('./routes/thanks');
 
 let app = express();
 
@@ -29,6 +30,7 @@ app.use('/image', imageRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/results', resultsRouter);
+app.use('/thanks', thanksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

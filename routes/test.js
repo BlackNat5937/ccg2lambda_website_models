@@ -81,7 +81,7 @@ router.get('/test', function (req, res, next) {
     }
     else{
         req.session.view = 0;
-        res.redirect("/test/")
+        res.redirect("/thanks/")
     }
     
 });
