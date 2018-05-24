@@ -2,8 +2,24 @@
     
 <div class="container">
 <h1> TEST </h1>
-<p> Choosen sentence : {{sentence}}</p>
+<p> Choosen sentence : {{question}}</p>
 </div>
+<div class="checkbox">
+  <label><input type="checkbox" value="">{{answer1}}</label>
+</div>
+<div class="checkbox">
+  <label><input type="checkbox" value="">{{answer2}}</label>
+</div>
+<div class="checkbox disabled">
+  <label><input type="checkbox" value="">{{answer3}}</label>
+</div>
+<p>
+  Test n°{{number_test}}/10
+</p>
+<p>
+    <a class="btn btn-primary btn-lg" href="/test/test" role="button">Next question !</a>
+</p>
+
 
 
 
