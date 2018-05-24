@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const session = require('express-session');
 
@@ -19,16 +20,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser("test passed"));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret : "test passed"}));
+app.use(session({secret: "test passed"}));
 
 app.use('/', indexRouter);
 app.use('/image', imageRouter);
 app.use('/users', usersRouter);
-app.use('/test', testRouter);
+app.use('/contribute', testRouter);
 app.use('/results', resultsRouter);
 app.use('/thanks', thanksRouter);
 
