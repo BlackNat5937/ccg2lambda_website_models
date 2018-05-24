@@ -1,27 +1,27 @@
 {% extends 'layout.twig' %} {% block body %}
-    
+
 <div class="container">
-<h1> TEST </h1>
-<p> Choosen sentence : {{question}}</p>
+  <h1>Question n° {{number_test}}</h1>
+  <form action="#" class="" method="POST">
+    <fieldset class="form-group">
+      <legend>{{question}}</legend>
+      <div class="form-check">
+          <label class="form-check-label">
+            <input required type="radio" class="form-check-input" name="answer">{{answer1}}
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="answer">{{answer2}}
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="answer">{{answer3}}
+          </label>
+        </div>
+    </fieldset>
+    <button class="btn btn-primary" type="submit">Next question</button>
+  </form>
 </div>
-<div class="checkbox">
-  <label><input type="checkbox" value="">{{answer1}}</label>
-</div>
-<div class="checkbox">
-  <label><input type="checkbox" value="">{{answer2}}</label>
-</div>
-<div class="checkbox disabled">
-  <label><input type="checkbox" value="">{{answer3}}</label>
-</div>
-<p>
-  Test n°{{number_test}}/10
-</p>
-<p>
-    <a class="btn btn-primary btn-lg" href="/test/test" role="button">Next question !</a>
-</p>
-
-
-
-
-
 {% endblock body %}
