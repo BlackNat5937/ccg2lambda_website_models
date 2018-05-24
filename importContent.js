@@ -20,7 +20,7 @@ class Answer {
         let answerInsertSQL = `INSERT INTO answers(answer_id, answer_string, answer_questioncode)
         VALUES(${localId}, '${localText}', ${questionID})`;
 
-        dbCon.query(answerInsertSQL, function (err) {
+        dbCon.query(answerInsertSQL, err => {
             if (err) throw err;
             console.log(`1 answer inserted : "${localText}"`);
         });
@@ -47,7 +47,7 @@ class Question {
             let questionInsertSQL = `INSERT INTO questions(question_string, question_rightanswer, question_sentencecode)
             VALUES('${localQuestion}', ${localRightAnswer}, ${sentenceID})`;
 
-            dbCon.query(questionInsertSQL, function (err, result) {
+            dbCon.query(questionInsertSQL, (err, result) => {
                 if (err) return reject(err);
                 console.log(`1 question inserted : "${localQuestion}"`);
                 resolve(result);
@@ -71,13 +71,43 @@ class Sentence {
             let sentenceInsertSQl = `INSERT INTO sentences(sentence_string)
             VALUES('${localSentence}')`;
 
-            dbCon.query(sentenceInsertSQl, function (err, result) {
+            dbCon.query(sentenceInsertSQl, (err, result) => {
                 if (err) return reject(err);
                 console.log(`1 sentence inserted : "${localSentence}"`);
                 resolve(result);
             });
         });
     }
+}
+
+function insertBoxInDataBase(boxImage, sentenceID, dbCon) {
+    let insertBoxImageSQL = `INSERT INTO boximages SET ?`;
+    let values = {
+        boximage_image: boxImage,
+        boximage_sentencecode: sentenceID,
+    };
+    return new Promise((resolve, reject) => {
+        dbCon.query(insertBoxImageSQL, values, (err, result) => {
+            if (err) return reject(err);
+            console.log(`box image inserted.`);
+            resolve(result);
+        });
+    });
+}
+
+function insertGraphInDataBase(graphImage, sentenceID, dbCon) {
+    let insertBoxImageSQL = `INSERT INTO graphimages SET ?`;
+    let values = {
+        graphimage_image: graphImage,
+        graphimage_sentencecode: sentenceID,
+    };
+    return new Promise((resolve, reject) => {
+        dbCon.query(insertBoxImageSQL, values, (err, result) => {
+            if (err) return reject(err);
+            console.log(`graph image inserted.`);
+            resolve(result);
+        });
+    });
 }
 
 // remove two first args (node executable and the path to this JS file)
@@ -130,13 +160,15 @@ con.connect(function (err) {
     insert sentence->promise->then while there are questions->insert question->promise then insert answers->wait for all
     */
     let insertSentence = new Sentence(sentenceString, sentenceQuestions);
-    let promises = [];
+    let sentenceInsertPromises = [];
+    let imageInsertPromises = [];
+    let sentenceId;
     insertSentence.insertSelfInDatabase(con)
         .then(sentenceInsertResult => {
-            let sentenceId = sentenceInsertResult.insertId;
+            sentenceId = sentenceInsertResult.insertId;
             insertSentence.questions.forEach(question => {
                 let actualQuestion = question;
-                promises.push(actualQuestion.insertSelfInDatabase(con, sentenceId)
+                sentenceInsertPromises.push(actualQuestion.insertSelfInDatabase(con, sentenceId)
                     .then(questionInsertResult => {
                         let questionId = questionInsertResult.insertId;
                         actualQuestion.answers.forEach(answer => {
@@ -144,8 +176,12 @@ con.connect(function (err) {
                         })
                     }));
             });
-            return Promise.all(promises);
+            return Promise.all(sentenceInsertPromises);
         }).then(() => {
+        imageInsertPromises.push(insertGraphInDataBase(sentenceGraphRep, sentenceId, con));
+        imageInsertPromises.push(insertBoxInDataBase(sentenceDRSRep, sentenceId, con));
+        return Promise.all(imageInsertPromises);
+    }).then(() => {
         con.end();
     }).catch(reason => {
         con.end();
