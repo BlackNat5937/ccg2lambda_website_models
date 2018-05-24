@@ -17,10 +17,9 @@ function getRandomQuestionFromDatabase(dbCon) {
 
 function getAnswersFromDatabse(dbCon, codeQuestion) {
     return new Promise((resolve, reject) => {
-        dbCon.query("SELECT * FROM answers WHERE answers.answer_questioncode = " + codeQuestion, function (err, result2, fields) {
+        dbCon.query("SELECT * FROM answers WHERE answers.answer_questioncode = " + codeQuestion, function (err, result, fields) {
             if (err) reject(err);
-            console.log(result2);
-            resolve(result2);
+            resolve(result);
         });
     });
 }
@@ -28,61 +27,80 @@ function getAnswersFromDatabse(dbCon, codeQuestion) {
 /**
  * GET home page
  */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
     res.render('contribute', {
         title: 'MR Test',
         current: 'test',
     });
 });
 
-router.get('/test', function (req, res, next) {
-    //session count page
-    if (typeof req.session.view === 'undefined') {
-        req.session.view = 1;
+function updateTestStage(req, isGet) {
+    if (typeof req.session.testStage === 'undefined') {
+        req.session.testStage = 1;
     } else {
-        req.session.view++;
+        req.session.testStage++;
     }
+    if (isGet === true)
+        req.session.testStage = 1;
+}
 
-    if (req.session.view <= 10) {
-        let questions;
+function renderQuestionPage(res, req) {
+    let questions;
+    let con = mysql.createConnection({
+        host: config.mysql_host,
+        user: config.mysql_username,
+        password: config.mysql_password,
+        database: "visualization"
+    });
+    let randomQuestion = "";
+    let questionObject;
+    let answers = [];
+    let visualization;
 
-        let con = mysql.createConnection({
-            host: config.mysql_host,
-            user: config.mysql_username,
-            password: config.mysql_password,
-            database: "visualization"
+    getRandomQuestionFromDatabase(con).then(sentenceResult => {
+        randomQuestion = sentenceResult[0].question_string;
+        questionObject = sentenceResult[0];
+    }).then(() => {
+        return getAnswersFromDatabse(con, questionObject.question_code).then(answersResult => {
+            answers = answersResult;
         });
+    }).then(() => {
+        res.render('test', {
+            questions: questions,
+            question: randomQuestion,
+            answer1: answers[0].answer_string,
+            answer2: answers[1].answer_string,
+            answer3: answers[2].answer_string,
+            title: 'MR Test',
+            current: 'test',
+            number_test: req.session.testStage,
+        });
+    }).catch();
+}
 
-        let randomQuestion = "";
-        let questionObject;
-        let answers = [];
-        let visualization;
+router.post('/test', (req, res, next) => {
+    updateTestStage(req, false);
 
-        getRandomQuestionFromDatabase(con).then(sentenceResult => {
-            randomQuestion = sentenceResult[0].question_string;
-            questionObject = sentenceResult[0];
-        }).then(() => {
-            return getAnswersFromDatabse(con, questionObject.question_code).then(answersResult => {
-                answers = answersResult;
-            });
-        }).then(() => {
-            res.render('test', {
-                questions: questions,
-                question: randomQuestion,
-                answer1: answers[0].answer_string,
-                answer2: answers[1].answer_string,
-                answer3: answers[2].answer_string,
-                title: 'MR Test',
-                current: 'test',
-                number_test: req.session.view,
-            });
-        }).catch();
-    }
-    else {
-        req.session.view = 0;
+    if (req.session.testStage > 10) {
+        req.session.testStage = 0;
         res.redirect("/thanks/")
     }
+    else {
+        renderQuestionPage(res, req);
+    }
+});
 
+router.get('/test', (req, res, next) => {
+    //session count page
+    updateTestStage(req, true);
+
+    if (req.session.testStage > 10) {
+        req.session.testStage = 0;
+        res.redirect("/thanks/")
+    }
+    else {
+        renderQuestionPage(res, req);
+    }
 });
 
 module.exports = router;
