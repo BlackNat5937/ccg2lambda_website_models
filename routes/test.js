@@ -24,6 +24,15 @@ function getAnswersFromDatabse(dbCon, codeQuestion) {
     });
 }
 
+function getImageFromDatabase(dbCon, codeSentence){
+    return new Promise((resolve, reject)=> {
+        dbCon.query("SELECT * FROM graphimages WHERE graphimages.graphimage_sentencecode = " + codeSentence, function(err,result,fields){
+            if(err) reject(err);
+            resolve(result);
+        })
+    })
+}
+
 /**
  * GET home page
  */
@@ -57,6 +66,7 @@ function renderQuestionPage(res, req) {
     let answers = [];
     let visualization;
 
+    //for imag e: questionObject.question_sentencecode
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
         questionObject = sentenceResult[0];
@@ -64,6 +74,11 @@ function renderQuestionPage(res, req) {
         return getAnswersFromDatabse(con, questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
+    }).then(()=>{
+        return getImageFromDatabase(con, questionObject.question_sentencecode).then(imageResult => {
+            visualization = imageResult[0];
+            console.log("IMAGE : " + visualization.graphimage_image)
+        })
     }).then(() => {
         res.render('test', {
             questions: questions,
