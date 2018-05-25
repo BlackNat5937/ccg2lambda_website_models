@@ -27,7 +27,7 @@
                     <p>Graph representations abide by a set of rules, to make them easier to read. Review these rules before
                         starting a test!</p>
                     <p>
-                        <a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a>
+                        <a class="btn btn-lg btn-primary" href="#tutorial_graph" role="button">Learn more</a>
                     </p>
                 </div>
             </div>
@@ -53,5 +53,38 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 id="tutorial_graph">How to read graph visualizations</h1>
+            <p>In graph visualizations, there are several types of nodes :</p>
+            <ul>
+                <li>Blue ones are entities.</li>
+                <li>Red ones are events.</li>
+                <li>Green ones provide additionnal information by connecting the others.</li>
+            </ul>
+            <p>There are also several types of edges :</p>
+            <ul>
+                <li>is-a edges specify what is exactly an entity (x for instance) refers to.</li>
+                <li>event, subject and object edges specify the entities participating in an event.</li>
+                <li>conj edges connect the objects joined together by green nodes.</li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <img class="img-thumbnail mx-auto d-block" src="/images/examplegraph.png" alt="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p>In graph representations, a node having multiple edges connected to it means there is an implicit "and" logical
+                operation between what those edges represent.</p>
+            <p>Starting to read from the x entity or a event node is the best way to read graph visualizations.</p>
+            <p>Red polygons are negation areas. They encompass the scope of the negation; everything in them has its meaning
+                reversed. For example, having a x node in a negation polygon means x does not exist.</p>
+            <p>Disjunction is represented by a new class of nodes : Yellow nodes. The yellow OR node is connected to either
+                possibilities presented by the disjunction.</p>
+        </div>
+    </div>
 </div>
 {% endblock body %}
