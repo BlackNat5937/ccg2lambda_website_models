@@ -1,14 +1,11 @@
 const express = require('express');
-const session = require('express-session');
 const router = express.Router();
 const mysql = require('mysql');
 const config = require(`../config.json`);
 
-const fs = require('fs');
-
 function getRandomQuestionFromDatabase(dbCon) {
     return new Promise((resolve, reject) => {
-        dbCon.query("SELECT * FROM questions ORDER BY RAND() LIMIT 1", function (err, result, fields) {
+        dbCon.query(`SELECT * FROM questions ORDER BY RAND() LIMIT 1`, (err, result) => {
             if (err) reject(err);
             resolve(result);
         });
@@ -17,26 +14,17 @@ function getRandomQuestionFromDatabase(dbCon) {
 
 function getAnswersFromDatabse(dbCon, codeQuestion) {
     return new Promise((resolve, reject) => {
-        dbCon.query("SELECT * FROM answers WHERE answers.answer_questioncode = " + codeQuestion, function (err, result, fields) {
+        dbCon.query(`SELECT * FROM answers WHERE answers.answer_questioncode = ${codeQuestion}`, (err, result) => {
             if (err) reject(err);
             resolve(result);
         });
     });
 }
 
-function getImageFromDatabase(dbCon, codeSentence){
-    return new Promise((resolve, reject)=> {
-        dbCon.query("SELECT * FROM graphimages WHERE graphimages.graphimage_sentencecode = " + codeSentence, function(err,result,fields){
-            if(err) reject(err);
-            resolve(result);
-        })
-    })
-}
-
 /**
  * GET home page
  */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     res.render('contribute', {
         title: 'MR Test',
         current: 'test',
@@ -64,7 +52,6 @@ function renderQuestionPage(res, req) {
     let randomQuestion = "";
     let questionObject;
     let answers = [];
-    let visualization;
 
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
@@ -74,7 +61,6 @@ function renderQuestionPage(res, req) {
             answers = answersResult;
         });
     }).then(() => {
-        console.log(questionObject.question_sentencecode);
         res.render('test', {
             questions: questions,
             question: randomQuestion,
@@ -89,8 +75,10 @@ function renderQuestionPage(res, req) {
     }).catch();
 }
 
-router.post('/test', (req, res, next) => {
+router.post('/test', (req, res) => {
     updateTestStage(req, false);
+
+    console.log(req.body);
 
     if (req.session.testStage > 10) {
         req.session.testStage = 0;
@@ -101,7 +89,7 @@ router.post('/test', (req, res, next) => {
     }
 });
 
-router.get('/test', (req, res, next) => {
+router.get('/test', (req, res) => {
     //session count page
     updateTestStage(req, true);
 
