@@ -74,7 +74,6 @@ function renderQuestionPage(res, req) {
             answers = answersResult;
         });
     }).then(() => {
-        console.log(questionObject.question_sentencecode);
         res.render('test', {
             questions: questions,
             question: randomQuestion,
