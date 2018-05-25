@@ -50,17 +50,18 @@ function renderQuestionPage(res, req) {
         database: "visualization"
     });
     let randomQuestion = "";
-    let questionObject;
     let answers = [];
+    req.session.questionObject;
 
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
-        questionObject = sentenceResult[0];
+        req.session.questionObject = sentenceResult[0];
     }).then(() => {
-        return getAnswersFromDatabse(con, questionObject.question_code).then(answersResult => {
+        return getAnswersFromDatabse(con, req.session.questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
     }).then(() => {
+        let rand = Math.floor((Math.random() * 2) + 1);
         res.render('test', {
             questions: questions,
             question: randomQuestion,
@@ -70,7 +71,8 @@ function renderQuestionPage(res, req) {
             title: 'MR Test',
             current: 'test',
             number_test: req.session.testStage,
-            code_sentence: questionObject.question_sentencecode,
+            code_sentence: req.session.questionObject.question_sentencecode,
+            visualization_code: rand,
         });
     }).catch();
 }
@@ -78,7 +80,12 @@ function renderQuestionPage(res, req) {
 router.post('/test', (req, res) => {
     updateTestStage(req, false);
 
-    console.log(req.body);
+    if(req.body.answer == req.session.questionObject.question_rightanswer){
+        console.log("Right");
+    }
+    else{
+        console.log("False");
+    }
 
     if (req.session.testStage > 10) {
         req.session.testStage = 0;
