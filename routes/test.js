@@ -12,7 +12,7 @@ function getRandomQuestionFromDatabase(dbCon) {
     });
 }
 
-function getAnswersFromDatabse(dbCon, codeQuestion) {
+function getAnswersFromDatabase(dbCon, codeQuestion) {
     return new Promise((resolve, reject) => {
         dbCon.query(`SELECT * FROM answers WHERE answers.answer_questioncode = ${codeQuestion}`, (err, result) => {
             if (err) reject(err);
@@ -51,13 +51,12 @@ function renderQuestionPage(res, req) {
     });
     let randomQuestion = "";
     let answers = [];
-    req.session.questionObject;
 
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
         req.session.questionObject = sentenceResult[0];
     }).then(() => {
-        return getAnswersFromDatabse(con, req.session.questionObject.question_code).then(answersResult => {
+        return getAnswersFromDatabase(con, req.session.questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
     }).then(() => {
@@ -80,10 +79,10 @@ function renderQuestionPage(res, req) {
 router.post('/test', (req, res) => {
     updateTestStage(req, false);
 
-    if(req.body.answer == req.session.questionObject.question_rightanswer){
+    if (req.body.answer === req.session.questionObject.question_rightanswer) {
         console.log("Right");
     }
-    else{
+    else {
         console.log("False");
     }
 
