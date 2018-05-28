@@ -12,7 +12,7 @@ function getRandomQuestionFromDatabase(dbCon) {
     });
 }
 
-function getAnswersFromDatabse(dbCon, codeQuestion) {
+function getAnswersFromDatabase(dbCon, codeQuestion) {
     return new Promise((resolve, reject) => {
         dbCon.query(`SELECT * FROM answers WHERE answers.answer_questioncode = ${codeQuestion}`, (err, result) => {
             if (err) reject(err);
@@ -52,14 +52,13 @@ function renderQuestionPage(res, req) {
     let randomQuestion = "";
     let questionCode = -1;
     let answers = [];
-    req.session.questionObject;
 
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
         questionCode = sentenceResult[0].question_code;
         req.session.questionObject = sentenceResult[0];
     }).then(() => {
-        return getAnswersFromDatabse(con, req.session.questionObject.question_code).then(answersResult => {
+        return getAnswersFromDatabase(con, req.session.questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
     }).then(() => {
