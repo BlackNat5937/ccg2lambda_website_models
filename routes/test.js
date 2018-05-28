@@ -12,7 +12,7 @@ function getRandomQuestionFromDatabase(dbCon) {
     });
 }
 
-function getAnswersFromDatabse(dbCon, codeQuestion) {
+function getAnswersFromDatabase(dbCon, codeQuestion) {
     return new Promise((resolve, reject) => {
         dbCon.query(`SELECT * FROM answers WHERE answers.answer_questioncode = ${codeQuestion}`, (err, result) => {
             if (err) reject(err);
@@ -50,14 +50,15 @@ function renderQuestionPage(res, req) {
         database: "visualization"
     });
     let randomQuestion = "";
+    let questionCode = -1;
     let answers = [];
-    req.session.questionObject;
 
     getRandomQuestionFromDatabase(con).then(sentenceResult => {
         randomQuestion = sentenceResult[0].question_string;
+        questionCode = sentenceResult[0].question_code;
         req.session.questionObject = sentenceResult[0];
     }).then(() => {
-        return getAnswersFromDatabse(con, req.session.questionObject.question_code).then(answersResult => {
+        return getAnswersFromDatabase(con, req.session.questionObject.question_code).then(answersResult => {
             answers = answersResult;
         });
     }).then(() => {
@@ -65,6 +66,7 @@ function renderQuestionPage(res, req) {
         res.render('test', {
             questions: questions,
             question: randomQuestion,
+            question_code: questionCode,
             answer1: answers[0].answer_string,
             answer2: answers[1].answer_string,
             answer3: answers[2].answer_string,
@@ -79,13 +81,23 @@ function renderQuestionPage(res, req) {
 
 router.post('/test', (req, res) => {
     updateTestStage(req, false);
+    let con = mysql.createConnection({
+        host: config.mysql_host,
+        user: config.mysql_username,
+        password: config.mysql_password,
+        database: "visualization"
+    });
+
+    let isright;
 
     if(req.body.answer == req.session.questionObject.question_rightanswer){
-        console.log("Right");
+        isright = 'yes';
     }
     else{
-        console.log("False");
+        isright = 'no';
     }
+
+    con.query('INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES (' + isright + ', ' + req.body.representationtype + ', ' + req.body.code_question +  ')');
 
     if (req.session.testStage > 10) {
         req.session.testStage = 0;

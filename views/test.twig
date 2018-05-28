@@ -30,6 +30,7 @@
         {% if visualization_code == 1 %}
         <input type="hidden" name="representationtype" value="graph"> {% else %}
         <input type="hidden" name="representationtype" value="drs"> {% endif %}
+        <input type="hidden" name="code_question" value=question_code>
         <button class="btn btn-primary" type="submit">Next question</button>
       </form>
     </div>
