@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 28 mai 2018 à 04:17
+-- Généré le :  lun. 28 mai 2018 à 05:16
 -- Version du serveur :  10.1.32-MariaDB
 -- Version de PHP :  7.0.30
 
@@ -41,14 +41,14 @@ CREATE TABLE `answers` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `boximages`
+-- Structure de la table `drsimages`
 --
 
-DROP TABLE IF EXISTS `boximages`;
-CREATE TABLE `boximages` (
-  `boximage_code` int(11) NOT NULL,
-  `boximage_image` mediumblob NOT NULL,
-  `boximage_sentencecode` int(11) NOT NULL
+DROP TABLE IF EXISTS `drsimages`;
+CREATE TABLE `drsimages` (
+  `drsimage_code` int(11) NOT NULL,
+  `drsimage_image` mediumblob NOT NULL,
+  `drsimage_sentencecode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -87,9 +87,8 @@ CREATE TABLE `questions` (
 DROP TABLE IF EXISTS `results`;
 CREATE TABLE `results` (
   `results_code` int(11) NOT NULL,
-  `results_timesright` int(11) NOT NULL,
-  `results_timesanswered` int(11) NOT NULL,
-  `results_visualizationtype` enum('graph','box') NOT NULL,
+  `results_isright` enum('yes','no') NOT NULL,
+  `results_visualizationtype` enum('graph','drs') NOT NULL,
   `results_questioncode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -117,11 +116,11 @@ ALTER TABLE `answers`
   ADD KEY `FK_QUESTIONCODE` (`answer_questioncode`);
 
 --
--- Index pour la table `boximages`
+-- Index pour la table `drsimages`
 --
-ALTER TABLE `boximages`
-  ADD PRIMARY KEY (`boximage_code`),
-  ADD KEY `FK_BSENTENCECODE` (`boximage_sentencecode`);
+ALTER TABLE `drsimages`
+  ADD PRIMARY KEY (`drsimage_code`),
+  ADD KEY `FK_BSENTENCECODE` (`drsimage_sentencecode`);
 
 --
 -- Index pour la table `graphimages`
@@ -162,10 +161,10 @@ ALTER TABLE `answers`
   MODIFY `answer_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `boximages`
+-- AUTO_INCREMENT pour la table `drsimages`
 --
-ALTER TABLE `boximages`
-  MODIFY `boximage_code` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `drsimages`
+  MODIFY `drsimage_code` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `graphimages`
@@ -202,10 +201,10 @@ ALTER TABLE `answers`
   ADD CONSTRAINT `FK_QUESTIONCODE` FOREIGN KEY (`answer_questioncode`) REFERENCES `questions` (`question_code`);
 
 --
--- Contraintes pour la table `boximages`
+-- Contraintes pour la table `drsimages`
 --
-ALTER TABLE `boximages`
-  ADD CONSTRAINT `FK_BSENTENCECODE` FOREIGN KEY (`boximage_sentencecode`) REFERENCES `sentences` (`sentence_code`);
+ALTER TABLE `drsimages`
+  ADD CONSTRAINT `FK_BSENTENCECODE` FOREIGN KEY (`drsimage_sentencecode`) REFERENCES `sentences` (`sentence_code`);
 
 --
 -- Contraintes pour la table `graphimages`
