@@ -1,0 +1,22 @@
+{% extends 'layout.twig' %} {% block body %}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">{{ title }}</h1>
+        <p>このウェブサイトは、文章の意味表現の精度をテストするためのプラットフォームとして機能します。 ccg2lambda
+            Visualize.
+        </p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="/contribute" role="button">Go to test page >></a>
+        </p>
+    </div>
+</div>
+<div class="container">
+    <div id="howto" class="col-sm-12">
+        <h1>貢献する方法</h1>
+        <p>貢献するには、このサイトの「テスト」セクションに行く必要があります。 そこには、10の表現に関する質問があります。</p>
+        <h2 id="required">要件</h2>
+        <p>貢献するためには基本的な知識が必要です。 表現が疑似グラフまたはDRSであっても、グラフ理論やDRTに関する知識は必要ありません。
+        </p>
+    </div>
+</div>
+{% endblock %}

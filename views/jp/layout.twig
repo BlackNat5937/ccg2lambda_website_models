@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ title }}</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">ホームページ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li {{ (current=='test' ) ? 'class="nav-item active"' : 'class="nav-item"' }}>
+          <a class="nav-link" href="/contribute">テスト</a>
+        </li>
+        <li {{ (current=='results' ) ? 'class="nav-item active"' : 'class="nav-item"' }}>
+          <a class="nav-link" href="/results">結果</a>
+        </li>
+        <li {{ (current=='about' ) ? 'class="nav-item active"' : 'class="nav-item"' }}>
+          <a class="nav-link" href="/about">約</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  {% block body %}{% endblock %}
+  <div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="row">
+        <div class="col-12 col-md">
+          <small class="d-block mb-3 text-muted">2017-2018 Bekki Lab</small>
+        </div>
+        <div class="col-6 col-md">
+          <h5>Contribute</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted" href="/#required">要件</a>
+            </li>
+            <li>
+              <a class="text-muted" href="/contribute">表現のレビュー</a>
+            </li>
+            <li>
+              <a class="text-muted" href="/contribute/new">新しい文章を提出する</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>リソース</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted" href="https://github.com/mynlp/ccg2lambda">ccg2lambda on Github</a>
+            </li>
+            <li>
+              <a class="text-muted" href="http://www.aclweb.org/anthology/P16-4015">ccg2lambda : A Compositional Semantics System</a>
+            </li>
+            <li>
+              <a class="text-muted" href="https://github.com/BlackNat5937/ccg2lambda/tree/master/Visualization">ccg2lambda Visualize on Github</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 col-md">
+          <h5>約</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="text-muted" href="/about#team">チーム</a>
+            </li>
+            <li>
+              <a class="text-muted" href="/about#purpose">目的</a>
+            </li>
+            <li>
+              <a class="text-muted" href="/about#softwareUsed">使用ソフトウェア</a>
+            </li>
+            <li>
+              <a class="text-muted" href="/about#thanks">特別な感謝</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+  crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+  crossorigin="anonymous"></script>
+
+</html>
