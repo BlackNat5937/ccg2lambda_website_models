@@ -84,7 +84,7 @@ function insertDRSInDataBase(drsImage, sentenceID, dbCon) {
     let insertDRSImageSQL = `INSERT INTO drsimages SET ?`;
     let values = {
         drsimage_image: drsImage,
-        dresimage_sentencecode: sentenceID,
+        drsimage_sentencecode: sentenceID,
     };
     return new Promise((resolve, reject) => {
         dbCon.query(insertDRSImageSQL, values, (err, result) => {
