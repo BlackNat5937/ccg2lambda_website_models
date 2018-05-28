@@ -1,0 +1,10 @@
+{% extends 'layout.twig' %} {% block body %}
+<div class="jumbotron">
+  <h1 class="display-3">{{error.status}} : {{message}}</h1>
+</div>
+{% if error.stack is defined %}
+<div class="container">
+  <pre>
+    <samp>{{error.stack}}</samp></pre>
+</div>
+{% endif %} {% endblock %}

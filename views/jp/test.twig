@@ -1,0 +1,37 @@
+{% extends 'layout.twig' %} {% block body %}
+<div class="container">
+  {% if visualization_code == 1 %}
+  <p> グラフ ! </p>
+  <img src="/image/graph/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
+  {% elseif visualization_code == 2 %}
+  <p> ボックス ! </p>
+  <img src="/image/drs/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
+  {% endif %}
+  <div class="container">
+    <div class="jumbotron mt-3">
+      <h1>質問 n° {{number_test}}</h1>
+      <form action="#" class="" method="POST">
+        <fieldset class="form-group">
+          <legend>{{question}}</legend>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input required type="radio" class="form-check-input" name="answer" value="1">{{answer1}}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="answer" value="2">{{answer2}}
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="answer" value="3">{{answer3}}
+            </label>
+          </div>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">次の問題</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock body %}
