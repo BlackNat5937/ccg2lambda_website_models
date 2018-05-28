@@ -80,29 +80,29 @@ class Sentence {
     }
 }
 
-function insertBoxInDataBase(boxImage, sentenceID, dbCon) {
-    let insertBoxImageSQL = `INSERT INTO boximages SET ?`;
+function insertDRSInDataBase(drsImage, sentenceID, dbCon) {
+    let insertDRSImageSQL = `INSERT INTO drsimages SET ?`;
     let values = {
-        boximage_image: boxImage,
-        boximage_sentencecode: sentenceID,
+        drsimage_image: drsImage,
+        dresimage_sentencecode: sentenceID,
     };
     return new Promise((resolve, reject) => {
-        dbCon.query(insertBoxImageSQL, values, (err, result) => {
+        dbCon.query(insertDRSImageSQL, values, (err, result) => {
             if (err) return reject(err);
-            console.log(`box image inserted.`);
+            console.log(`drs image inserted.`);
             resolve(result);
         });
     });
 }
 
 function insertGraphInDataBase(graphImage, sentenceID, dbCon) {
-    let insertBoxImageSQL = `INSERT INTO graphimages SET ?`;
+    let insertGraphImageSQL = `INSERT INTO graphimages SET ?`;
     let values = {
         graphimage_image: graphImage,
         graphimage_sentencecode: sentenceID,
     };
     return new Promise((resolve, reject) => {
-        dbCon.query(insertBoxImageSQL, values, (err, result) => {
+        dbCon.query(insertGraphImageSQL, values, (err, result) => {
             if (err) return reject(err);
             console.log(`graph image inserted.`);
             resolve(result);
@@ -179,7 +179,7 @@ con.connect(function (err) {
             return Promise.all(sentenceInsertPromises);
         }).then(() => {
         imageInsertPromises.push(insertGraphInDataBase(sentenceGraphRep, sentenceId, con));
-        imageInsertPromises.push(insertBoxInDataBase(sentenceDRSRep, sentenceId, con));
+        imageInsertPromises.push(insertDRSInDataBase(sentenceDRSRep, sentenceId, con));
         return Promise.all(imageInsertPromises);
     }).then(() => {
         con.end();
