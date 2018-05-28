@@ -2,11 +2,9 @@
 <div class="container">
   {% if visualization_code == 1 %}
   <p> GRAPH ! </p>
-  <img src="/image/graph/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
-  {% elseif visualization_code == 2 %}
+  <img src="/image/graph/{{code_sentence}}" class="img-thumbnail mx-auto d-block" /> {% elseif visualization_code == 2 %}
   <p> BOX ! </p>
-  <img src="/image/drs/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
-  {% endif %}
+  <img src="/image/drs/{{code_sentence}}" class="img-thumbnail mx-auto d-block" /> {% endif %}
   <div class="container">
     <div class="jumbotron mt-3">
       <h1>Question n° {{number_test}}</h1>
@@ -29,6 +27,9 @@
             </label>
           </div>
         </fieldset>
+        {% if visualization_code == 1 %}
+        <input type="hidden" name="representationtype" value="graph"> {% else %}
+        <input type="hidden" name="representationtype" value="drs"> {% endif %}
         <button class="btn btn-primary" type="submit">Next question</button>
       </form>
     </div>
