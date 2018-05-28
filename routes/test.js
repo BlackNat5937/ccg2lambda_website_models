@@ -21,6 +21,15 @@ function getAnswersFromDatabase(dbCon, codeQuestion) {
     });
 }
 
+function insertResultInDatabase(dbCon, isRight, representationtype, code_question){
+    return new Promise((resolve, reject) => {
+        dbCon.query(`INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES ('${isRight}', '${representationtype}' , '${code_question}')` , (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
+
 /**
  * GET home page
  */
@@ -97,7 +106,9 @@ router.post('/test', (req, res) => {
         isright = 'no';
     }
 
-    con.query('INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES (' + isright + ', ' + req.body.representationtype + ', ' + req.body.code_question +  ')');
+//    insertResultInDatabase(con, isright, req.body.representationtype, req.body.code_question).catch();
+    console.log(`Code question : ${req.body.code_question} `)
+    con.query(`INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES ('${isright}', '${req.body.representationtype}' , ${req.body.code_question})`);
 
     if (req.session.testStage > 10) {
         req.session.testStage = 0;
