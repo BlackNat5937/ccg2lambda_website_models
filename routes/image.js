@@ -20,7 +20,7 @@ function getGraphImageFromDatabase(dbCon, codeSentence) {
 
 function getDRSImageFromDatabase(dbCon, codeSentence) {
     return new Promise((resolve, reject) => {
-        dbCon.query(`SELECT * FROM boximages WHERE boximages.boximage_sentencecode = ${codeSentence}`
+        dbCon.query(`SELECT * FROM drsimages WHERE drsimages.drsimage_sentencecode = ${codeSentence}`
             , (err, result) => {
                 if (err) return reject(err);
                 resolve(result);
