@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 22 mai 2018 à 08:53
+-- Généré le :  lun. 28 mai 2018 à 04:17
 -- Version du serveur :  10.1.32-MariaDB
 -- Version de PHP :  7.0.30
 
@@ -89,6 +89,7 @@ CREATE TABLE `results` (
   `results_code` int(11) NOT NULL,
   `results_timesright` int(11) NOT NULL,
   `results_timesanswered` int(11) NOT NULL,
+  `results_visualizationtype` enum('graph','box') NOT NULL,
   `results_questioncode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
