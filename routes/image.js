@@ -85,7 +85,7 @@ router.get('/drs/:sentence_id', (req, res) => {
     });
     let image;
     getDRSImageFromDatabase(con, req.sentence_id).then(imageResult => {
-        image = imageResult[0].boximage_image;
+        image = imageResult[0].drsimage_image;
     }).then(() => {
         res.contentType('png');
         res.send(Buffer.from(image));
