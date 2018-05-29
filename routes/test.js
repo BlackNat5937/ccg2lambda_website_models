@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const config = require(`../config.json`);
+const lang = require('./lang');
 
 function getRandomQuestionFromDatabase(dbCon) {
     return new Promise((resolve, reject) => {
@@ -21,9 +22,9 @@ function getAnswersFromDatabase(dbCon, codeQuestion) {
     });
 }
 
-function insertResultInDatabase(dbCon, isRight, representationtype, code_question){
+function insertResultInDatabase(dbCon, isRight, representationtype, code_question) {
     return new Promise((resolve, reject) => {
-        dbCon.query(`INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES ('${isRight}', '${representationtype}' , '${code_question}')` , (err, result) => {
+        dbCon.query(`INSERT INTO results (results_isright, results_visualizationtype, results_questioncode) VALUES ('${isRight}', '${representationtype}' , '${code_question}')`, (err, result) => {
             if (err) reject(err);
             resolve(result);
         });
@@ -34,7 +35,7 @@ function insertResultInDatabase(dbCon, isRight, representationtype, code_questio
  * GET home page
  */
 router.get('/', (req, res) => {
-    res.render('contribute', {
+    lang.renderLocalised('contribute', req, res, {
         title: 'MR Test',
         current: 'test',
     });
@@ -72,7 +73,7 @@ function renderQuestionPage(res, req) {
         });
     }).then(() => {
         let rand = Math.floor((Math.random() * 2) + 1);
-        res.render('test', {
+        lang.renderLocalised('test', req, res, {
             questions: questions,
             question: randomQuestion,
             question_code: questionCode,
@@ -99,10 +100,10 @@ router.post('/test', (req, res) => {
 
     let isright;
 
-    if(req.body.answer == req.session.questionObject.question_rightanswer){
+    if (req.body.answer === req.session.questionObject.question_rightanswer) {
         isright = 'yes';
     }
-    else{
+    else {
         isright = 'no';
     }
 

@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
  * GET about page
  */
 router.get('/about', (req, res) => {
-    res.render('about', {
+    lang.renderLocalised('about', req, res, {
         title: 'About this website',
         current: 'about',
     });
