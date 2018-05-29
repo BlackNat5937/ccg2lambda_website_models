@@ -1,3 +1,5 @@
+let isGlobal = false;
+
 let globalTotalAnswers;
 let globalRightAnswers;
 let drsTotalAnswers;
@@ -103,8 +105,11 @@ ready(() => {
 
     // initialize global data variables
     let globalData = document.querySelector('.js-global-stats');
-    globalTotalAnswers = +globalData.dataset.globalTotalAnswers;
-    globalRightAnswers = +globalData.dataset.globalRightAnswers;
+    if (globalData) {
+        isGlobal = true;
+        globalTotalAnswers = +globalData.dataset.globalTotalAnswers;
+        globalRightAnswers = +globalData.dataset.globalRightAnswers;
+    }
 
     // initialize drs data variables
     let drsData = document.querySelector('.js-drs-stats');

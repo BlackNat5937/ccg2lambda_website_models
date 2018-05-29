@@ -226,15 +226,15 @@ router.get('/', (req, res) => {
         lang.renderLocalised('results', req, res, {
             title: 'Test Results',
             current: 'results',
-            globalSuccessCount: globalSuccess,
-            totalAnswersCount: totalAnswers,
+            globalSuccess: globalSuccess,
+            globalTotal: totalAnswers,
             globalPercentage: getPercentage(globalSuccess, totalAnswers),
-            globalDrsSuccessCount: drsSuccess,
-            totalDrsCount: totalDrs,
-            globalDrsPercentage: getPercentage(drsSuccess, totalDrs),
-            globalGraphSuccessCount: graphSuccess,
-            totalGraphCount: totalGraph,
-            globalGraphPercentage: getPercentage(graphSuccess, totalGraph),
+            drsSuccess: drsSuccess,
+            drsTotal: totalDrs,
+            drsPercentage: getPercentage(drsSuccess, totalDrs),
+            graphSuccess: graphSuccess,
+            graphTotal: totalGraph,
+            graphPercentage: getPercentage(graphSuccess, totalGraph),
             sentences: allSentences,
         });
     }).catch(console.err);

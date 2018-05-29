@@ -1,13 +1,13 @@
 {% extends 'layout.twig' %} {% block body %}
-<div class="js-global-stats" data-global-total-answers="{{totalAnswersCount}}" data-global-right-answers="{{globalSuccessCount}}"
+<div class="js-global-stats" data-global-total-answers="{{globalTotal}}" data-global-right-answers="{{globalSuccess}}"
     data-global-percentage="{{globalPercentage}}">
     <!-- data for global results-->
 </div>
-<div class="js-drs-stats" data-drs-total-answers="{{totalDrsCount}}" data-drs-right-answers="{{globalDrsSuccessCount}}" data-drs-percentage="{{globalDrsPercentage}}">
+<div class="js-drs-stats" data-drs-total-answers="{{drsTotal}}" data-drs-right-answers="{{drsSuccess}}" data-drs-percentage="{{drsPercentage}}">
     <!-- data for drs results -->
 </div>
-<div class="js-graph-stats" data-graph-total-answers="{{totalGraphCount}}" data-graph-right-answers="{{globalGraphSuccessCount}}"
-    data-graph-percentage="{{globalGraphPercentage}}">
+<div class="js-graph-stats" data-graph-total-answers="{{graphTotal}}" data-graph-right-answers="{{graphSuccess}}"
+    data-graph-percentage="{{graphPercentage}}">
     <!-- data for graph results -->
 </div>
 <div class="jumbotron">
@@ -23,13 +23,13 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm">
-                    <h1 class="card-title pricing-card-title">{{totalAnswersCount}}
+                    <h1 class="card-title pricing-card-title">{{globalTotal}}
                         <small class="text-muted">questions answered</small>
                     </h1>
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>{{globalPercentage}}% of right answers</li>
-                        <li>{{totalDrsCount}} drs questions</li>
-                        <li>{{totalGraphCount}} graph questions</li>
+                        <li>{{drsTotal}} drs questions</li>
+                        <li>{{graphTotal}} graph questions</li>
                     </ul>
                 </div>
                 <div class="col-sm">
@@ -51,11 +51,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
-                        <h1 class="card-title pricing-card-title">{{totalDrsCount}}
+                        <h1 class="card-title pricing-card-title">{{drsTotal}}
                             <small class="text-muted">questions answered</small>
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>{{globalDrsPercentage}}% of right answers</li>
+                            <li>{{drsPercentage}}% of right answers</li>
                         </ul>
                     </div>
                     <div class="col-sm">
@@ -71,11 +71,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-5">
-                        <h1 class="card-title pricing-card-title">{{totalGraphCount}}
+                        <h1 class="card-title pricing-card-title">{{graphTotal}}
                             <small class="text-muted">questions answered</small>
                         </h1>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>{{globalGraphPercentage}}% of right answers</li>
+                            <li>{{graphPercentage}}% of right answers</li>
                         </ul>
                     </div>
                     <div class="col-sm">
@@ -104,4 +104,4 @@
     </table>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="javascripts/drawGraphs.js"></script>{% endblock body %}
+<script type="text/javascript" src="/javascripts/drawGraphs.js"></script>{% endblock body %}

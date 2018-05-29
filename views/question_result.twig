@@ -1,13 +1,80 @@
 {% extends 'layout.twig' %} {% block body %}
-
-<p> {{sentence}} </p>
-
-<h1> Drs : </h1>
-
-<p> {{drsSuccess}} / {{drsTotal}} : {{drsPercentage}}% </p>
-
-<h1> Graph : </h1>
-
-<p> {{graphSuccess}} / {{graphTotal}} : {{graphPercentage}}% </p>
-
-{% endblock body %}
+<div class="js-drs-stats" data-drs-total-answers="{{drsTotal}}" data-drs-right-answers="{{drsSuccess}}" data-drs-percentage="{{drsPercentage}}">
+    <!-- data for drs results -->
+</div>
+<div class="js-graph-stats" data-graph-total-answers="{{graphTotal}}" data-graph-right-answers="{{graphSuccess}}" data-graph-percentage="{{graphPercentage}}">
+    <!-- data for graph results -->
+</div>
+<div class="container">
+    <div class="card mb-4 box-shadow" style="margin-top:50px">
+        <div class="card-header">
+            <h2 class="my-0 font-weight-normal">Statistics for {{sentence}}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 class="card-title pricing-card-title">{{drsTotal + graphTotal}}
+                        <small class="text-muted">questions answered</small>
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>{{(drsPercentage + graphPercentage)/2}}% of right answers</li>
+                        <li>{{drsTotal}} drs questions</li>
+                        <li>{{graphTotal}} graph questions</li>
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    <div id="globalsuccesschart"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div id="globalpercentagechart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h3 class="my-0 font-weight-normal">DRS</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h1 class="card-title pricing-card-title">{{drsTotal}}
+                            <small class="text-muted">questions answered</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{drsPercentage}}% of right answers</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <div id="drssuccesschart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h3 class="my-0 font-weight-normal">Graph</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h1 class="card-title pricing-card-title">{{graphTotal}}
+                            <small class="text-muted">questions answered</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{graphPercentage}}% of right answers</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <div id="graphsuccesschart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="/javascripts/drawGraphs.js"></script> {% endblock body %}
