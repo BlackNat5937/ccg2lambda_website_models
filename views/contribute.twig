@@ -39,7 +39,7 @@
                     <h1>Learn how to read DRS representations</h1>
                     <p>DRT has standard rules for DRS representation of sentences. Review these before starting a test!</p>
                     <p>
-                        <a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a>
+                        <a class="btn btn-lg btn-primary" href="#tutorial_box" role="button">Learn more</a>
                     </p>
                 </div>
             </div>
@@ -102,5 +102,47 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock body %}
+    <div class="container">
+        <div>
+            <h1 id="tutorial_box">How to read DRS visualizations</h1>
+            <div class="row tutorialsection">
+                <div class="col-sm">
+                    <p>To read a Box, you read from top to bottom, starting by the title, where all the identifier and how they
+                        connection are represented.
+                    </p>
+                    <ul>
+                        <li>Then, the entities, and in parenthesis their identifiers.</li>
+                        <li>After that, you have the event, with their identifier and then the entities to which the event refers.
+                        </li>
+                        <li>And finally, the additional information on the connection of the entities and event.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row tutorialsection">
+
+                <div class="col-sm-4">
+                    <img class="img-thumbnail mx-auto d-block" src="/images/examplebox1.png" alt="">
+                </div>
+            </div>
+            <div class="row tutorialsection">
+
+                <div class="col-sm-8">
+                    <p>Negation is represented by the box inside the box, with the negation symbol (¬) in front of the box.
+                        All the item in a negatited box are negated.</p>
+                </div>
+                <div class="col-sm-4">
+                    <img class="img-thumbnail mx-auto d-block" src="/images/examplebox2.png" alt="">
+                </div>
+            </div>
+            <div class="row tutorialsection">
+                <div class="col-sm-8">
+                    <p>Disjunction is represented by two box separated by the disjunction symbol (V). The item in those two
+                        box are the item subject to disjunction.</p>
+                </div>
+                <div class="col-sm-4">
+                    <img class="img-thumbnail mx-auto d-block" src="/images/examplebox3.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock body %}
