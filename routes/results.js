@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const config = require(`../config.json`);
+const lang = require('./lang');
 
-function getPercentage(a,b){
+function getPercentage(a, b) {
     return (a / b) * 100;
 }
 
-function getGlobalSuccess(dbCon){
+function getGlobalSuccess(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS successCount FROM `results` WHERE results_isright = 'yes'", (err, result) => {
             if (err) reject(err);
@@ -16,7 +17,7 @@ function getGlobalSuccess(dbCon){
     });
 }
 
-function getTotalAnswers(dbCon){
+function getTotalAnswers(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS total FROM `results`", (err, result) => {
             if (err) reject(err);
@@ -25,7 +26,7 @@ function getTotalAnswers(dbCon){
     });
 }
 
-function getDrsSuccess(dbCon){
+function getDrsSuccess(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS successCount FROM `results` WHERE results_isright = 'yes' AND results_visualizationtype = 'drs'", (err, result) => {
             if (err) reject(err);
@@ -34,7 +35,7 @@ function getDrsSuccess(dbCon){
     });
 }
 
-function getDrsTotal(dbCon){
+function getDrsTotal(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS total FROM `results` WHERE results_visualizationtype = 'drs'", (err, result) => {
             if (err) reject(err);
@@ -43,7 +44,7 @@ function getDrsTotal(dbCon){
     });
 }
 
-function getGraphSuccess(dbCon){
+function getGraphSuccess(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS successCount FROM `results` WHERE results_isright = 'yes' AND results_visualizationtype = 'graph'", (err, result) => {
             if (err) reject(err);
@@ -52,7 +53,7 @@ function getGraphSuccess(dbCon){
     });
 }
 
-function getGraphTotal(dbCon){
+function getGraphTotal(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS total FROM `results` WHERE results_visualizationtype = 'graph'", (err, result) => {
             if (err) reject(err);
@@ -61,7 +62,7 @@ function getGraphTotal(dbCon){
     });
 }
 
-function getAllSentences(dbCon){
+function getAllSentences(dbCon) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT * FROM sentences", (err, result) => {
             if (err) reject(err);
@@ -174,7 +175,7 @@ router.get('/sentence/:code_sentence', function(req, res, next){
 /**
  * GET home page
  */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res) => {
     let con = mysql.createConnection({
         host: config.mysql_host,
         user: config.mysql_username,
@@ -192,8 +193,8 @@ router.get('/', function (req, res, next) {
 
     getGlobalSuccess(con).then(globalSuccessResult => {
         globalSuccess = globalSuccessResult[0].successCount;
-    }).then(()=>{
-        return getTotalAnswers(con).then(totalAnswersResult =>{
+    }).then(() => {
+        return getTotalAnswers(con).then(totalAnswersResult => {
             totalAnswers = totalAnswersResult[0].total;
         });
     }).then(() => {
@@ -204,11 +205,11 @@ router.get('/', function (req, res, next) {
         return getDrsTotal(con).then(drsTotalResult => {
             totalDrs = drsTotalResult[0].total;
         });
-    }).then(()=>{
+    }).then(() => {
         return getGraphSuccess(con).then(graphSuccessResult => {
             graphSuccess = graphSuccessResult[0].successCount;
         });
-    }).then(() =>{
+    }).then(() => {
         return getGraphTotal(con).then(graphTotalResult => {
             totalGraph = graphTotalResult[0].total;
         });
@@ -217,7 +218,7 @@ router.get('/', function (req, res, next) {
             allSentences = allSentencesResult;
         });
     }).then(() => {
-        res.render('results', {
+        lang.renderLocalised('results', req, res, {
             title: 'Test Results',
             current: 'results',
             globalSuccessCount: globalSuccess,
@@ -226,14 +227,12 @@ router.get('/', function (req, res, next) {
             globalDrsSuccessCount: drsSuccess,
             totalDrsCount: totalDrs,
             globalDrsPercentage: getPercentage(drsSuccess, totalDrs),
-            globalGraphSuccessCount : graphSuccess,
+            globalGraphSuccessCount: graphSuccess,
             totalGraphCount: totalGraph,
             globalGraphPercentage: getPercentage(graphSuccess, totalGraph),
             sentences: allSentences,
         });
-    })
-
-    
+    }).catch(console.err);
 });
 
 module.exports = router;
