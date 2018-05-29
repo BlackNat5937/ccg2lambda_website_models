@@ -4,8 +4,13 @@ const mysql = require('mysql');
 const config = require(`../config.json`);
 const lang = require('./lang');
 
+function toFixed(num, fixed) {
+    let re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+    return num.toString().match(re)[0];
+}
+
 function getPercentage(a, b) {
-    return (a / b) * 100;
+    return toFixed((a / b) * 100, 1);
 }
 
 function getGlobalSuccess(dbCon) {
@@ -71,7 +76,7 @@ function getAllSentences(dbCon) {
     });
 }
 
-function getSentence(dbCon, code){
+function getSentence(dbCon, code) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT * FROM sentences WHERE sentences.sentence_code = " + code, (err, result) => {
             if (err) reject(err);
@@ -80,7 +85,7 @@ function getSentence(dbCon, code){
     });
 }
 
-function getDrsSentenceSuccess(dbCon, code){
+function getDrsSentenceSuccess(dbCon, code) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS successCount FROM results INNER JOIN questions ON results_questioncode = questions.question_code INNER JOIN sentences ON questions.question_sentencecode = sentences.sentence_code WHERE results_isright = 'yes' AND results_visualizationtype = 'drs' AND sentences.sentence_code = " + code, (err, result) => {
             if (err) reject(err);
@@ -89,7 +94,7 @@ function getDrsSentenceSuccess(dbCon, code){
     });
 }
 
-function getDrsSentenceTotal(dbCon, code){
+function getDrsSentenceTotal(dbCon, code) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS total FROM results INNER JOIN questions ON results_questioncode = questions.question_code INNER JOIN sentences ON questions.question_sentencecode = sentences.sentence_code WHERE results_visualizationtype = 'drs' AND sentences.sentence_code = " + code, (err, result) => {
             if (err) reject(err);
@@ -98,7 +103,7 @@ function getDrsSentenceTotal(dbCon, code){
     });
 }
 
-function getGraphSentenceSuccess(dbCon, code){
+function getGraphSentenceSuccess(dbCon, code) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS successCount FROM results INNER JOIN questions ON results_questioncode = questions.question_code INNER JOIN sentences ON questions.question_sentencecode = sentences.sentence_code WHERE results_isright = 'yes' AND results_visualizationtype = 'graph' AND sentences.sentence_code = " + code, (err, result) => {
             if (err) reject(err);
@@ -107,7 +112,7 @@ function getGraphSentenceSuccess(dbCon, code){
     });
 }
 
-function getGraphSentenceTotal(dbCon, code){
+function getGraphSentenceTotal(dbCon, code) {
     return new Promise((resolve, reject) => {
         dbCon.query("SELECT COUNT(*) AS total FROM results INNER JOIN questions ON results_questioncode = questions.question_code INNER JOIN sentences ON questions.question_sentencecode = sentences.sentence_code WHERE results_visualizationtype = 'graph' AND sentences.sentence_code = " + code, (err, result) => {
             if (err) reject(err);
@@ -117,12 +122,12 @@ function getGraphSentenceTotal(dbCon, code){
 }
 
 router.param('code_sentence', (req, res, next, code) => {
-    req.code_sentence = code;
+        req.code_sentence = code;
         next();
     }
 );
 
-router.get('/sentence/:code_sentence', function(req, res, next){
+router.get('/sentence/:code_sentence', function (req, res, next) {
     let con = mysql.createConnection({
         host: config.mysql_host,
         user: config.mysql_username,
@@ -168,8 +173,8 @@ router.get('/sentence/:code_sentence', function(req, res, next){
             graphPercentage: getPercentage(sentenceGraphSuccess, sentenceGraphTotal),
         });
     })
-    
-    
+
+
 });
 
 /**
