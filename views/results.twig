@@ -1,7 +1,31 @@
 {% extends 'layout.twig' %} {% block body %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
 
+    function drawChart() {
+
+        let rightQty = {{ globalDrsSuccessCount }};
+    let wrongQty = {{ totalDrsCount }}-{{ globalDrsSuccessCount }};
+
+    var data = google.visualization.arrayToDataTable([
+        ['Success for DRS', 'Quantity'],
+        ['Right', rightQty],
+        ['Wrong', wrongQty],
+    ]);
+
+    var options = {
+        title: 'Answer repartition for DRS visualizations'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+    }
+</script>
 <h1> Results </h1>
-
+<div id="piechart" style="width: 900px; height: 500px;"></div>
 <h2> Global : </h2>
 
 <p> {{globalSuccessCount}} / {{totalAnswersCount}} : {{globalPercentage}} %</p>
@@ -17,17 +41,17 @@
 <h2> Sentences : </h2>
 
 <table>
-<tr>
-    <th>Code</th>
-    <th>Sentence</th>
-</tr>
-{% for sentence in sentences %}
+    <tr>
+        <th>Code</th>
+        <th>Sentence</th>
+    </tr>
+    {% for sentence in sentences %}
     <tr>
         <th>{{ sentence.sentence_code }}</th>
         <th><a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a></th> 
         
     </tr>
-{% endfor %}
+    {% endfor %}
 </table>
 
 {% endblock body %}
