@@ -1,57 +1,100 @@
 {% extends 'layout.twig' %} {% block body %}
+<div class="js-global-stats" data-global-total-answers="{{totalAnswersCount}}" data-global-right-answers="{{globalSuccessCount}}"
+    data-global-percentage="{{globalPercentage}}">
+    <!-- data for global results-->
+</div>
+<div class="js-drs-stats" data-drs-total-answers="{{totalDrsCount}}" data-drs-right-answers="{{globalDrsSuccessCount}}" data-drs-percentage="{{globalDrsPercentage}}">
+    <!-- data for drs results -->
+</div>
+<div class="js-graph-stats" data-graph-total-answers="{{totalGraphCount}}" data-graph-right-answers="{{globalGraphSuccessCount}}"
+    data-graph-percentage="{{globalGraphPercentage}}">
+    <!-- data for graph results -->
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Results</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h2 class="my-0 font-weight-normal">Global</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 class="card-title pricing-card-title">{{totalAnswersCount}}
+                        <small class="text-muted">questions answered</small>
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>{{globalPercentage}}% of right answers</li>
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    <div id="globalsuccesschart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-deck mb-3 text-center">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h3 class="my-0 font-weight-normal">DRS</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h1 class="card-title pricing-card-title">{{totalDrsCount}}
+                            <small class="text-muted">questions answered</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>{{globalDrsPercentage}}% of right answers</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <div id="drssuccesschart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h3 class="my-0 font-weight-normal">Graph</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h1 class="card-title pricing-card-title">{{totalGraphCount}}
+                                <small class="text-muted">questions answered</small>
+                            </h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>{{globalGraphPercentage}}% of right answers</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm">
+                            <div id="graphsuccesschart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <h2> Sentences : </h2>
+
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Sentence</th>
+        </tr>
+        {% for sentence in sentences %}
+        <tr>
+            <th>{{ sentence.sentence_code }}</th>
+            <th>
+                <a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a>
+            </th>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-        let rightQty = {{ globalDrsSuccessCount }};
-    let wrongQty = {{ totalDrsCount }}-{{ globalDrsSuccessCount }};
-
-    var data = google.visualization.arrayToDataTable([
-        ['Success for DRS', 'Quantity'],
-        ['Right', rightQty],
-        ['Wrong', wrongQty],
-    ]);
-
-    var options = {
-        title: 'Answer repartition for DRS visualizations'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(data, options);
-    }
-</script>
-<h1> Results </h1>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
-<h2> Global : </h2>
-
-<p> {{globalSuccessCount}} / {{totalAnswersCount}} : {{globalPercentage}} %</p>
-
-<h3> Drs : </h3>
-
-<p> {{globalDrsSuccessCount}} / {{totalDrsCount}} : {{globalDrsPercentage}} %</p>
-
-<h3> Graph : </h3>
-
-<p> {{globalGraphSuccessCount}} / {{totalGraphCount}} : {{globalGraphPercentage}} %</p>
-
-<h2> Sentences : </h2>
-
-<table>
-    <tr>
-        <th>Code</th>
-        <th>Sentence</th>
-    </tr>
-    {% for sentence in sentences %}
-    <tr>
-        <th>{{ sentence.sentence_code }}</th>
-        <th><a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a></th> 
-        
-    </tr>
-    {% endfor %}
-</table>
-
-{% endblock body %}
+<script type="text/javascript" src="javascripts/drawGraphs.js"></script>{% endblock body %}

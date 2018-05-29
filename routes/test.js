@@ -100,7 +100,7 @@ router.post('/test', (req, res) => {
 
     let isright;
 
-    if (req.body.answer === req.session.questionObject.question_rightanswer) {
+    if (req.body.answer == req.session.questionObject.question_rightanswer) {
         isright = 'yes';
     }
     else {
