@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const fs = require('fs');
 
 const lang_enUS = {
     code: 'en-US',
@@ -30,7 +31,12 @@ router.get('/jp-JP', (req, res) => {
 let renderLocalised = function (template, req, res, options) {
     if (req.session.lang === undefined) req.session.lang = lang_enUS;
     let templatePath = path.join(req.session.lang.path, template);
-
+    // check template truly exists
+    let exists = fs.existsSync(`views/${templatePath}.twig`);
+    if (exists === false) {
+        // fallback on english on if not
+        templatePath = path.join(lang_enUS.path, template);
+    }
     res.render(templatePath, options);
 };
 
