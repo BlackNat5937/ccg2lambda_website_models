@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const lang = require('./lang');
 
 /**
  * GET home page
  */
-router.get('/', function (req, res, next) {
-    res.render('index', {
+router.get('/', (req, res) => {
+    lang.renderLocalised('index', req, res, {
         title: 'Sentence Meaning Representations testing',
         current: '',
     });
@@ -14,7 +15,7 @@ router.get('/', function (req, res, next) {
 /**
  * GET about page
  */
-router.get('/about', function (req, res, next) {
+router.get('/about', (req, res) => {
     res.render('about', {
         title: 'About this website',
         current: 'about',
