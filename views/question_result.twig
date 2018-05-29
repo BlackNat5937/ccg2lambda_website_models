@@ -1,0 +1,13 @@
+{% extends 'layout.twig' %} {% block body %}
+
+<p> {{sentence}} </p>
+
+<h1> Drs : </h1>
+
+<p> {{drsSuccess}} / {{drsTotal}} : {{drsPercentage}}% </p>
+
+<h1> Graph : </h1>
+
+<p> {{graphSuccess}} / {{graphTotal}} : {{graphPercentage}}% </p>
+
+{% endblock body %}

@@ -24,7 +24,8 @@
 {% for sentence in sentences %}
     <tr>
         <th>{{ sentence.sentence_code }}</th>
-        <th>{{ sentence.sentence_string }}</th>
+        <th><a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a></th> 
+        
     </tr>
 {% endfor %}
 </table>
