@@ -6,4 +6,27 @@
 
 <p> {{globalSuccessCount}} / {{totalAnswersCount}} : {{globalPercentage}} %</p>
 
+<h3> Drs : </h3>
+
+<p> {{globalDrsSuccessCount}} / {{totalDrsCount}} : {{globalDrsPercentage}} %</p>
+
+<h3> Graph : </h3>
+
+<p> {{globalGraphSuccessCount}} / {{totalGraphCount}} : {{globalGraphPercentage}} %</p>
+
+<h2> Sentences : </h2>
+
+<table>
+<tr>
+    <th>Code</th>
+    <th>Sentence</th>
+</tr>
+{% for sentence in sentences %}
+    <tr>
+        <th>{{ sentence.sentence_code }}</th>
+        <th>{{ sentence.sentence_string }}</th>
+    </tr>
+{% endfor %}
+</table>
+
 {% endblock body %}

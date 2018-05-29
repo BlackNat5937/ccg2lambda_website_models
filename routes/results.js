@@ -26,11 +26,48 @@ function getTotalAnswers(dbCon){
 }
 
 function getDrsSuccess(dbCon){
+    return new Promise((resolve, reject) => {
+        dbCon.query("SELECT COUNT(*) AS successCount FROM `results` WHERE results_isright = 'yes' AND results_visualizationtype = 'drs'", (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
 
+function getDrsTotal(dbCon){
+    return new Promise((resolve, reject) => {
+        dbCon.query("SELECT COUNT(*) AS total FROM `results` WHERE results_visualizationtype = 'drs'", (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
 }
 
 function getGraphSuccess(dbCon){
+    return new Promise((resolve, reject) => {
+        dbCon.query("SELECT COUNT(*) AS successCount FROM `results` WHERE results_isright = 'yes' AND results_visualizationtype = 'graph'", (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
 
+function getGraphTotal(dbCon){
+    return new Promise((resolve, reject) => {
+        dbCon.query("SELECT COUNT(*) AS total FROM `results` WHERE results_visualizationtype = 'graph'", (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
+
+function getAllSentences(dbCon){
+    return new Promise((resolve, reject) => {
+        dbCon.query("SELECT * FROM sentences", (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
 }
 
 /**
@@ -45,12 +82,37 @@ router.get('/', function (req, res, next) {
     });
     let globalSuccess;
     let totalAnswers;
+    let drsSuccess;
+    let totalDrs;
+    let graphSuccess;
+    let totalGraph;
 
+    let allSentences;
     getGlobalSuccess(con).then(globalSuccessResult => {
         globalSuccess = globalSuccessResult[0].successCount;
     }).then(()=>{
         return getTotalAnswers(con).then(totalAnswersResult =>{
             totalAnswers = totalAnswersResult[0].total;
+        });
+    }).then(() => {
+        return getDrsSuccess(con).then(drsSuccessResult => {
+            drsSuccess = drsSuccessResult[0].successCount;
+        });
+    }).then(() => {
+        return getDrsTotal(con).then(drsTotalResult => {
+            totalDrs = drsTotalResult[0].total;
+        });
+    }).then(()=>{
+        return getGraphSuccess(con).then(graphSuccessResult => {
+            graphSuccess = graphSuccessResult[0].successCount;
+        });
+    }).then(() =>{
+        return getGraphTotal(con).then(graphTotalResult => {
+            totalGraph = graphTotalResult[0].total;
+        });
+    }).then(() => {
+        return getAllSentences(con).then(allSentencesResult => {
+            allSentences = allSentencesResult;
         });
     }).then(() => {
         res.render('results', {
@@ -59,6 +121,13 @@ router.get('/', function (req, res, next) {
             globalSuccessCount: globalSuccess,
             totalAnswersCount: totalAnswers,
             globalPercentage: getPercentage(globalSuccess, totalAnswers),
+            globalDrsSuccessCount: drsSuccess,
+            totalDrsCount: totalDrs,
+            globalDrsPercentage: getPercentage(drsSuccess, totalDrs),
+            globalGraphSuccessCount : graphSuccess,
+            totalGraphCount: totalGraph,
+            globalGraphPercentage: getPercentage(graphSuccess, totalGraph),
+            sentences: allSentences,
         });
     })
 
