@@ -1,13 +1,11 @@
 {% extends 'layout.twig' %} {% block body %}
-<div class="js-global-stats" data-global-total-answers="{{globalTotal}}" data-global-right-answers="{{globalSuccess}}"
-    data-global-percentage="{{globalPercentage}}">
+<div class="js-global-stats" data-global-total-answers="{{globalTotal}}" data-global-right-answers="{{globalSuccess}}" data-global-percentage="{{globalPercentage}}">
     <!-- data for global results-->
 </div>
 <div class="js-drs-stats" data-drs-total-answers="{{drsTotal}}" data-drs-right-answers="{{drsSuccess}}" data-drs-percentage="{{drsPercentage}}">
     <!-- data for drs results -->
 </div>
-<div class="js-graph-stats" data-graph-total-answers="{{graphTotal}}" data-graph-right-answers="{{graphSuccess}}"
-    data-graph-percentage="{{graphPercentage}}">
+<div class="js-graph-stats" data-graph-total-answers="{{graphTotal}}" data-graph-right-answers="{{graphSuccess}}" data-graph-percentage="{{graphPercentage}}">
     <!-- data for graph results -->
 </div>
 <div class="jumbotron">
@@ -85,22 +83,31 @@
             </div>
         </div>
     </div>
-    <h2> Sentences : </h2>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <h2>Sentences</h2>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Sentence</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sentence in sentences %}
+            <tr>
+                <th>{{ sentence.sentence_code }}</th>
+                <th>
+                    <a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a>
+                </th>
 
-    <table>
-        <tr>
-            <th>Code</th>
-            <th>Sentence</th>
-        </tr>
-        {% for sentence in sentences %}
-        <tr>
-            <th>{{ sentence.sentence_code }}</th>
-            <th>
-                <a href="/results/sentence/{{sentence.sentence_code}}"> {{ sentence.sentence_string }} </a>
-            </th>
-
-        </tr>
-        {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
