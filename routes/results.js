@@ -5,8 +5,13 @@ const config = require(`../config.json`);
 const lang = require('./lang');
 
 function toFixed(num, fixed) {
-    let re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
-    return num.toString().match(re)[0];
+    console.log(num);
+    if (num === undefined || num === null || num == "NaN")
+        return 0;
+    else {
+        let re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+        return num.toString().match(re)[0];
+    }
 }
 
 function getPercentage(a, b) {
