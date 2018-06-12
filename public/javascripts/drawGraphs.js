@@ -36,8 +36,8 @@ function drawGlobalSuccessChart() {
 function drawGlobalRightPercentageComparativeChart() {
     let data = google.visualization.arrayToDataTable([
         ["Representation Type", "Percentage of Right Answers", {role: "style"}],
-        ["DRS", 8.94, "lightgreen"],
-        ["Graph", 10.49, "lightblue"],
+        ["DRS", drsPercentage, "lightgreen"],
+        ["Graph", graphPercentage, "lightblue"],
     ]);
 
     const options = {
