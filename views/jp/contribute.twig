@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="carousel-caption text-left">
                     <h1>テストを開始する</h1>
-                    <p>ボックスやグラフのビジュアライゼーションでは、10の多項選択問題に答える必要があります。</p>
+                    <p>ボックス・グラフの可視化では、10個の選択問題に答える必要があります。</p>
                     <p>
                         <a class="btn btn-lg btn-primary" href="/contribute/test" role="button">今すぐテストを開始する</a>
                     </p>
@@ -23,8 +23,8 @@
             <img class="second-slide" src="/images/banner2.png" alt="Second slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>グラフの表現を読む方法を学ぶ</h1>
-                    <p>グラフ表現は、読みやすくするために一連の規則を守っています。 テストを開始する前にこれらのルールを確認してください！</p>
+                    <h1>グラフ表現を読む方法を学ぶ</h1>
+                    <p>グラフ表現は、読みやすさのために一連の規則に従っています。 テストを開始する前にこれらのルールを確認してください！</p>
                     <p>
                         <a class="btn btn-lg btn-primary" href="#tutorial_graph" role="button">Learn more</a>
                     </p>
@@ -36,7 +36,7 @@
             <div class="container">
                 <div class="carousel-caption text-right">
                     <h1>DRS表現を読む方法を学ぶ</h1>
-                    <p>DRTは、文のDRS表現のための標準規則を有する。 テストを開始する前にこれらを確認してください！</p>
+                    <p>談話表示理論(DRT)のDRS表現には、いくつかの標準的な規則があります。 テストを開始する前にこれらを確認してください！</p>
                     <p>
                         <a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a>
                     </p>
@@ -58,22 +58,22 @@
         <h1 id="tutorial_graph">グラフの視覚化を読み込む方法</h1>
         <div class="row tutorialsection">
             <div class="col-sm">
-                <p>グラフ表現では、複数のエッジが接続されているノードは、それらのエッジが表すものとの間に暗黙的な「および」論理演算があることを意味します。</p>
-                <p>xエンティティまたはイベントノードからの読み取りを開始することが、グラフの視覚化を読み取る最良の方法です。</p>
+                <p>グラフ表現では、複数のエッジが接続されているノードに、それらのエッジが表すものとの間に暗黙的な「かつ（連言）」の論理演算があるとみなします。</p>
+                <p>最初にエンティティ x またはイベント e のノードに注目することが、グラフの視覚化を理解する最良の方法です。</p>
             </div>
         </div>
         <div class="row tutorialsection">
             <div class="col-sm-8">
                 <p>グラフの可視化には、いくつかのタイプのノードがあります。</p>
                 <ul>
-                    <li>青はエンティティです。</li>
-                    <li>赤いものはイベントです。</li>
-                    <li>緑のものは、他のものを接続することによって追加の情報を提供します。</li>
+                    <li>青のノードはエンティティを表します。</li>
+                    <li>赤のノードはイベントを表します。</li>
+                    <li>緑のノードは、他のノードと接続することによって付加的な情報を表します。</li>
                 </ul>
                 <p>エッジにはいくつかのタイプがあります。</p>
                 <ul>
-                    <li>is-a edgesは、正確に何がエンティティ（例えばx）であるかを指定します。</li>
-                    <li>イベント、サブジェクトおよびオブジェクトのエッジは、イベントに参加するエンティティを指定します。</li>
+                    <li>is-a エッジは、正確に何がエンティティ（例えばx）であるのかを指定します。</li>
+                    <li>イベント、サブジェクト(subject)およびオブジェクト(object)のエッジは、イベントに参加するエンティティを指定します。</li>
                     <li>conjエッジは、緑のノードによって結合されたオブジェクトを接続します。</li>
                 </ul>
             </div>
@@ -86,13 +86,13 @@
                 <img class="img-thumbnail mx-auto d-block" src="/images/examplegraph2.png" alt="">
             </div>
             <div class="col-sm-8">
-                <p>赤いポリゴンは負の領域です。 それらは否定の範囲を包含する。 その中のすべての意味が逆転しています。
-                     例えば、否定多角形内にeノードを有することは、eが存在しないことを意味する。</p>
+                <p>赤の多角形は否定を意味し、その領域は否定のスコープを表します。赤の領域の内部では肯定から否定へと意味が逆転しています。
+                     例えば、否定の多角形内にeノードがあることは、イベントeが存在しないことを意味します。</p>
             </div>
         </div>
         <div class="row tutorialsection">
             <div class="col-sm-8">
-                <p>分離は、ノードの新しいクラス、すなわち黄色のノードによって表される。 黄色のORノードは、論理和によって提示される可能性のいずれかに接続される。</p>
+                <p>選言は、ノードの新しいクラス、すなわち黄色のノードによって表される。 黄色の選言ノードは、選言によって結び付けられる２つの可能性のいずれかに接続されます。</p>
             </div>
             <div class="col-sm-4">
                 <img class="img-thumbnail mx-auto d-block" src="/images/examplegraph3.png" alt="">
@@ -104,13 +104,13 @@
                 <h1 id="tutorial_box">DRSの視覚化を読み取る方法</h1>
                 <div class="row tutorialsection">
                     <div class="col-sm">
-                        <p>Boxを読むには、上から順に、タイトルから始まり、すべての識別子とその接続方法が表示されます。
+                        <p>ボックスは上から順に読みます。タイトルには、すべての識別子とその接続方法が表示されます。
                         </p>
                         <ul>
-                            <li>次に、エンティティとその括弧内に識別子を入れます。</li>
-                            <li>その後、識別子とそのイベントが参照するエンティティを含むイベントが発生します。
+                            <li>次に、エンティティとその括弧内に識別子が表示されます。</li>
+                            <li>その後、識別子とそのイベントが参照するエンティティを含むイベントが表示されます。
                             </li>
-                            <li>最後に、エンティティとイベントの接続に関する追加情報。</li>
+                            <li>最後に、エンティティとイベントの接続に関する追加情報が表示されます。</li>
                         </ul>
                     </div>
                 </div>
@@ -123,8 +123,8 @@
                 <div class="row tutorialsection">
     
                     <div class="col-sm-8">
-                        <p>否定はボックスの中のボックスで表され、ボックスの前に否定記号（¬）が付きます。 
-                            否定されたボックス内のすべてのアイテムは無効になります。</p>
+                        <p>否定は、ボックスの前に否定記号（¬）を付けることで表示されます。ボックスの中に否定記号付きの別のボックスが現れることになります。 
+                            否定されたボックス内のすべての項目は否定のスコープにあります。</p>
                     </div>
                     <div class="col-sm-4">
                         <img class="img-thumbnail mx-auto d-block" src="/images/examplebox2.png" alt="">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="row tutorialsection">
                     <div class="col-sm-8">
-                        <p>分離は、分離記号（V）で区切られた2つのボックスで表されます。 これらの2つのボックスの項目は、分離の対象となる項目です。</p>
+                        <p>選言は、選言記号（V）で区切られた2つのボックスで表されます。 これらの2つのボックスは、選言によって結び付けられた内容を表します。</p>
                     </div>
                     <div class="col-sm-4">
                         <img class="img-thumbnail mx-auto d-block" src="/images/examplebox3.png" alt="">
