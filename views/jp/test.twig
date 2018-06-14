@@ -1,10 +1,8 @@
 {% extends 'jp/layout.twig' %} {% block body %}
 <div class="container">
   {% if visualization_code == 1 %}
-  <p> グラフ ! </p>
   <img src="/image/graph/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
   {% elseif visualization_code == 2 %}
-  <p> ボックス ! </p>
   <img src="/image/drs/{{code_sentence}}" class="img-thumbnail mx-auto d-block" />
   {% endif %}
   <div class="container">
@@ -29,7 +27,11 @@
             </label>
           </div>
         </fieldset>
-        <button class="btn btn-primary" type="submit">次の問題</button>
+        {% if visualization_code == 1 %}
+        <input type="hidden" name="representationtype" value="graph"> {% else %}
+        <input type="hidden" name="representationtype" value="drs"> {% endif %}
+        <input type="hidden" name="code_question" value={{question_code}}>
+        <button class="btn btn-primary" type="submit">Next question</button>
       </form>
     </div>
   </div>
